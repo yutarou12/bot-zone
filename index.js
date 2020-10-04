@@ -1,60 +1,60 @@
-let debugInformations = []
+const debugInformations = []
 
-require('http')
+require("https")
   .createServer((_req, res) => {
-    res.writeHead(200, { 'Content-Type': 'text/plain; charset=utf-8' })
+    res.writeHead(200, { "Content-Type": "text/plain; charset=utf-8" })
     res.end(
       `"BotZone 専属ボット" is active now 👌\n\n--- Debug Information ---\n${debugInformations.join(
-        '\n'
+        "\n"
       )}`
     )
   })
   .listen(3000)
 
-const { Client, MessageEmbed } = require('discord.js')
+const { Client, MessageEmbed } = require("discord.js")
 const client = new Client()
-const config = require('./config.json')
+const config = require("./config.json")
 
-client.on('debug', (info) => {
+client.on("debug", (info) => {
   debugInformations.push(info)
 })
 
-client.on('ready', () => {
-  console.log('BotZone 起動確認')
+client.on("ready", () => {
+  console.log("BotZone 起動確認")
   client.guilds.cache.forEach((guild) => {
-    if (guild.id !== '589312721506271236') guild.leave()
+    if (guild.id !== "589312721506271236") guild.leave()
   })
 
-  client.channels.cache.get('657500911043870740').send(
+  client.channels.cache.get("657500911043870740").send(
     new MessageEmbed()
-      .setTitle('BB起動 Log')
-      .setColor('#0d6ce5')
+      .setTitle("BB起動 Log")
+      .setColor("#0d6ce5")
       .setTimestamp()
       .setThumbnail(client.user.avatarURL())
-      .setDescription('Bot が起動しました')
+      .setDescription("Bot が起動しました")
       .addFields([
         {
-          name: 'Bot Zone に参加している人数',
+          name: "BotZone に参加している人数",
           value: client.users.cache.size,
         },
         {
-          name: 'Bot Zone のチャンネル数',
+          name: "BotZone のチャンネル数",
           value: client.channels.cache.size,
         },
       ])
   )
 
-  client.user.setActivity('BotZone 専属Bot 機能考え中', { type: 'PLAYING' })
+  client.user.setActivity("BotZone 専属Bot 機能考え中", { type: "PLAYING" })
 })
 
-client.on('message', async (message) => {
+client.on("message", async (message) => {
   if (!message.content.startsWith(config.prefix)) return
 
-  const args = message.content.slice(config.prefix.length).split(' ')
+  const args = message.content.slice(config.prefix.length).split(" ")
   const command = args.shift().toLowerCase()
 
-  if (command === 'ping') message.channel.send(`${client.ws.ping} ms`)
-  if (command === 'create') {
+  if (command === "ping") message.channel.send(`${client.ws.ping} ms`)
+  if (command === "create") {
     try {
       const privateChannelExists = message.guild.channels.cache.some(
         (channel) => channel.name === `room-${message.author.username}`
@@ -68,28 +68,28 @@ client.on('message', async (message) => {
         )
       } else {
         message.delete()
-        const channel = await message.guild.channel.create(
+        const channel = await message.guild.channels.create(
           `room-${message.author.username}`,
           {
-            type: 'text',
+            type: "text",
             permissionOverwrites: [
               {
                 id: message.author.id,
-                allow: ['VIEW_CHANNEL', 'SEND_MESSAGES'],
+                allow: ["VIEW_CHANNEL", "SEND_MESSAGES"],
               },
               {
                 id: message.guild.id,
-                deny: ['VIEW_CHANNEL'],
+                deny: ["VIEW_CHANNEL"],
               },
               {
-                id: '602356923148402688',
-                allow: ['VIEW_CHANNEL'],
+                id: "602356923148402688",
+                allow: ["VIEW_CHANNEL"],
               },
             ],
           }
         )
 
-        await channel.setParent('619886010423312384')
+        await channel.setParent("619886010423312384")
 
         message.channel.send(
           new MessageEmbed().setTitle(
