@@ -48,9 +48,9 @@ client.on('ready', () => {
 })
 
 client.on('message', async (message) => {
-  if (!message.content.startsWith(process.env.prefix)) return
+  if (!message.content.startsWith(config.prefix)) return
 
-  const args = message.content.slice(process.env.prefix.length).split(' ')
+  const args = message.content.slice(config.prefix.length).split(' ')
   const command = args.shift().toLowerCase()
 
   if (command === 'ping') message.channel.send(`${client.ws.ping} ms`)
