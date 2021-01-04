@@ -53,7 +53,7 @@ client.on("message", async (message) => {
   const args = message.content.slice(config.prefix.length).split(" ")
   const command = args.shift().toLowerCase()
 
-  if (command === "ping") message.channel.send(`${client.ws.ping} ms`)
+  if (command === "ping") message.channel.send(`WebSocket: ${client.ws.ping} ms\nMessage: ${new Date() - message.createdAt} ms`)
   if (command === "bot"){
     const Guild_bots = message.guild.members.cache.filter((user) => {
       return user.user.bot == true
