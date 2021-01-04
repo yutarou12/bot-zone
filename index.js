@@ -11,16 +11,16 @@ require("https")
   })
   .listen(3000)
 
-const { Client, MessageEmbed } = require("discord.js")
+const { Client, MessageEmbed } = require("discord.js");
 const client = new Client()
-const config = require("./config.json")
+const config = require("./config.json");
 
 client.on("debug", (info) => {
   debugInformations.push(info)
 })
 
 client.on("ready", () => {
-  console.log("BotZone 起動確認")
+  console.log("BotZone 起動確認\nVersion "+process.version)
   client.guilds.cache.forEach((guild) => {
     if (guild.id !== "589312721506271236") guild.leave()
   })
