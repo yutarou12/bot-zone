@@ -20,7 +20,7 @@ client.on("debug", (info) => {
 })
 
 client.on("ready", () => {
-  console.log("BotZone 起動確認")
+  console.log("BotZone 起動確認\nVersion "+process.version)
   client.guilds.cache.forEach((guild) => {
     if (guild.id !== "589312721506271236") guild.leave()
   })
