@@ -11,9 +11,9 @@ require("https")
   })
   .listen(3000)
 
-const { Client, MessageEmbed } = require("discord.js")
+const { Client, MessageEmbed } = require("discord.js");
 const client = new Client()
-const config = require("./config.json")
+const config = require("./config.json");
 
 client.on("debug", (info) => {
   debugInformations.push(info)
