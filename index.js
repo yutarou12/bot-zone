@@ -54,6 +54,12 @@ client.on("message", async (message) => {
   const command = args.shift().toLowerCase()
 
   if (command === "ping") message.channel.send(`${client.ws.ping} ms`)
+  if (command === "bot"){
+    const Guild_bots = message.guild.members.cache.filter((user) => {
+      return user.user.bot == true
+    })
+    message.channel.send(`BOT数: ${Guild_bots.size}`)
+  }
   if (command === "create") {
     try {
       const privateChannelExists = message.guild.channels.cache.some(
