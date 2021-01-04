@@ -68,28 +68,24 @@ client.on("message", async (message) => {
         )
       } else {
         message.delete()
-        const channel = await message.guild.channels.create(
-          `room-${message.author.username}`,
-          {
-            type: "text",
-            permissionOverwrites: [
-              {
-                id: message.author.id,
-                allow: ["VIEW_CHANNEL", "SEND_MESSAGES"],
-              },
-              {
-                id: message.guild.id,
-                deny: ["VIEW_CHANNEL"],
-              },
-              {
-                id: "602356923148402688",
-                allow: ["VIEW_CHANNEL"],
-              },
-            ],
-          }
-        )
-
+        const channel = await message.guild.channels.create(`room-${message.author.username}`, { type: "text" })
         await channel.setParent("619886010423312384")
+        await channel.overwritePermissions([
+          {
+            id: message.author.id, //user
+            allow: ["VIEW_CHANNEL", "SEND_MESSAGES"],
+            type: "member"
+          },
+          {
+            id: "589312721506271236", //everyone
+            deny: ["VIEW_CHANNEL"],
+          },
+          {
+            id: "602356923148402688", // BOT役職
+            allow: ["VIEW_CHANNEL"],
+            type: "role"
+          },
+        ])
 
         message.channel.send(
           new MessageEmbed().setTitle(
