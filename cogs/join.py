@@ -5,9 +5,9 @@ class Join(commands.Cog):
     """入室時"""
     def __init__(self, bot):
         self.bot = bot
-        self.ch_id = self.bot.config['Zone']['welcome_channel_id']
-        self.role_member_id = self.bot.config['Zone']['role_member_id']
-        self.role_bot_id = self.bot.config['Zone']['role_bot_id']
+        self.ch_id = int(self.bot.config['Zone']['welcome_channel_id'])
+        self.role_member_id = int(self.bot.config['Zone']['role_member_id'])
+        self.role_bot_id = int(self.bot.config['Zone']['role_bot_id'])
 
     @commands.Cog.listener()
     async def on_member_join(self, member):

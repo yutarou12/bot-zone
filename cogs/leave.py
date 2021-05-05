@@ -5,7 +5,7 @@ class Leave(commands.Cog):
     """退出時"""
     def __init__(self, bot):
         self.bot = bot
-        self.ch_id = self.bot.config['Zone']['welcome_channel_id']
+        self.ch_id = int(self.bot.config['Zone']['welcome_channel_id'])
 
     @commands.Cog.listener()
     async def on_member_remove(self, member):
