@@ -59,7 +59,8 @@ if __name__ == '__main__':
         'cogs.utils',
         'cogs.join',
         'cogs.leave',
-        'cogs.channels'
+        'cogs.channels',
+        'jishaku'
     ]
     for extension in extensions:
         bot.load_extension(extension)
