@@ -1,9 +1,9 @@
 {
   "name": "bot-zonebot",
   "version": "0.1.0",
-  "main": "archive/index.js",
+  "main": "index.js",
   "scripts": {
-    "start": "node archive/index.js"
+    "start": "node index.js"
   },
   "dependencies": {
     "discord.js": "^12.3.1"
