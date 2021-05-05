@@ -46,11 +46,36 @@ async def on_ready():
 
 @bot.event
 async def on_command_error(ctx, error):
-    orig_error = getattr(error, "original", error)
-    error_msg = ''.join(traceback.TracebackException.from_exception(orig_error).format())
-    await ctx.send(f"```\n{error_msg}\n```")
-    app_info = await bot.application_info()
-    await app_info.owner.send(f"エラー情報\n```\n{error_msg}\n```")
+    try:
+        # CommandNotFound
+        if isinstance(error, commands.CommandNotFound):
+            return await ctx.reply('そのコマンドは存在しません', allowed_mentions=discord.AllowedMentions.none())
+
+        # BotMissingPermissions
+        elif isinstance(error, commands.BotMissingPermissions):
+            permission = {'read_messages': "メッセージを読む", 'send_messages': "メッセージを送信",
+                          'read_message_history': "メッセージ履歴を読む", 'manage_messages': "メッセージの管理",
+                          'embed_links': "埋め込みリンク", 'add_reactions': "リアクションの追加",
+                          'manage_channels': "チャンネルの管理"}
+            text = ""
+            for all_error_permission in error.missing_perms:
+                text += f"❌:{permission[all_error_permission]}\n"
+                del permission[all_error_permission]
+            for all_arrow_permission in list(permission.values()):
+                text += f"✅:{all_arrow_permission}\n"
+            try:
+                await ctx.author.send(embed=discord.Embed(description=text).set_author(
+                    name=f'『{ctx.guild.name}』での{bot.user}の必要な権限:'))
+            except Exception:
+                return
+        else:
+            raise error
+    except:
+        orig_error = getattr(error, "original", error)
+        error_msg = ''.join(traceback.TracebackException.from_exception(orig_error).format())
+        await ctx.send(f'エラー発生\n```py\n{error_msg}\n```')
+        app_info = await bot.application_info()
+        await app_info.owner.send(f'エラー情報\n```py\n{error_msg}\n```')
 
 if __name__ == '__main__':
     bot.config = config
