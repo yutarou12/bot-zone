@@ -8,7 +8,7 @@ load_dotenv()
 intents = discord.Intents.all()
 intents.typing = False
 bot = commands.Bot(
-    command_prefix='bb!',
+    command_prefix='test!',
     intents=intents
 )
 
@@ -24,16 +24,6 @@ config = {
     }
 }
 
-extensions = [
-    'cogs.admin',
-    'cogs.utils',
-    'cogs.join',
-    'cogs.leave',
-    'cogs.channels'
-]
-for extension in extensions:
-    bot.load_extension(extension)
-
 
 @bot.event
 async def on_ready():
@@ -44,9 +34,13 @@ async def on_ready():
     member_count = len([x.name for x in ch.guild.members if not x.bot])
 
     log_msg = discord.Embed(title="BB起動Log", description="Bot が起動しました")
-    log_msg.add_field(name=f"{ch.guild.name} に参加している人数", value=f"{member_count}")
-    log_msg.add_field(name=f"{ch.guild.name} のBOTの導入数", value=f"{bot_count}")
-    log_msg.set_thumbnail(url=bot.user.avatar.url)
+    log_msg.add_field(name=f"{ch.guild.name} に参加している人数",
+                      value=f"{member_count}",
+                      inline=False)
+    log_msg.add_field(name=f"{ch.guild.name} のBOTの導入数",
+                      value=f"{bot_count}",
+                      inline=False)
+    log_msg.set_thumbnail(url=bot.user.avatar_url)
     await ch.send(embed=log_msg)
 
 
@@ -59,4 +53,14 @@ async def on_command_error(ctx, error):
     await app_info.owner.send(f"エラー情報\n```\n{error_msg}\n```")
 
 if __name__ == '__main__':
+    bot.config = config
+    extensions = [
+        'cogs.admin',
+        'cogs.utils',
+        'cogs.join',
+        'cogs.leave',
+        'cogs.channels'
+    ]
+    for extension in extensions:
+        bot.load_extension(extension)
     bot.run(os.getenv("DISCORD_BOT_TOKEN"))

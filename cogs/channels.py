@@ -32,3 +32,7 @@ class Channels(commands.Cog):
                                                                   category=category_private)
                         s_msg = discord.Embed(title='プライベートチャンネルを作成しました', description=f'チャンネル: {channel.memtion}')
                         await ctx.reply(embed=s_msg, allowed_mentions=discord.AllowedMentions.none())
+
+
+def setup(bot):
+    bot.add_cog(Channels(bot))

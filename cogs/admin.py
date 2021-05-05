@@ -8,3 +8,7 @@ class Admin(commands.Cog):
     @commands.command()
     async def eval(self, ctx):
         await ctx.reply("フェイクだよ？")
+
+
+def setup(bot):
+    bot.add_cog(Admin(bot))

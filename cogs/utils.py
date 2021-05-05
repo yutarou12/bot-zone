@@ -8,12 +8,12 @@ class Utils(commands.Cog):
         self.bot = bot
 
     @commands.command(aliases=['bot'])
-    async def bot_count(self, ctx):
+    async def bots_count(self, ctx):
         count = len([x.name for x in ctx.guild.members if x.bot])
         await ctx.reply(f'導入BOT数: {count}', allowed_mentions=discord.AllowedMentions.none())
 
     @commands.command(aliases=['user', 'member'])
-    async def user_count(self, ctx):
+    async def users_count(self, ctx):
         count = len([x.name for x in ctx.guild.members if not x.bot])
         await ctx.reply(f'メンバー数: {count}', allowed_mentions=discord.AllowedMentions.none())
 
@@ -28,3 +28,7 @@ class Utils(commands.Cog):
             description=f' Pong! - {math.floor(self.bot.latency * 1000)} ms'
         )
         await ctx.reply(embed=embed, allowed_mentions=discord.AllowedMentions.none())
+
+
+def setup(bot):
+    bot.add_cog(Utils(bot))

@@ -1,4 +1,3 @@
-import discord
 from discord.ext import commands
 
 
@@ -23,3 +22,7 @@ class Join(commands.Cog):
                     await member.add_roles(role_bot)
             else:
                 await member.add_roles(role_member)
+
+
+def setup(bot):
+    bot.add_cog(Join(bot))
