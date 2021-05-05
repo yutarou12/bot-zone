@@ -12,7 +12,7 @@ class Leave(commands.Cog):
         guild = member.guild
         channel = guild.get_channel(self.ch_id)
         if channel:
-            await channel.send(f'📤Leave `{member}` が退出しました')
+            await channel.send(f'📤**Leave** `{member}` が退出しました')
 
 
 def setup(bot):

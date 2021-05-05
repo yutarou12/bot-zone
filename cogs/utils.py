@@ -24,10 +24,8 @@ class Utils(commands.Cog):
 
     @commands.command()
     async def ping(self, ctx):
-        embed = discord.Embed(
-            description=f' Pong! - {math.floor(self.bot.latency * 1000)} ms'
-        )
-        await ctx.reply(embed=embed, allowed_mentions=discord.AllowedMentions.none())
+        await ctx.reply(f' Pong! - {math.floor(self.bot.latency * 1000)} ms',
+                        allowed_mentions=discord.AllowedMentions.none())
 
 
 def setup(bot):

@@ -16,7 +16,7 @@ class Join(commands.Cog):
         role_member = guild.get_role(self.role_member_id)
         role_bot = guild.get_role(self.role_bot_id)
         if channel:
-            await channel.send(f'📥Join `{member}` が入室しました')
+            await channel.send(f'📥**Join** `{member}` が入室しました')
             if member.bot:
                 if role_member:
                     await member.add_roles(role_bot)
